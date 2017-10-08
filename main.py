@@ -19,7 +19,12 @@ class Blog(db.Model):
 
 @app.route("/blog")
 def blog():
-    return render_template('blog.html', blogs=get_blogs())
+    id = request.args.get('id')
+    if id:
+        blog = db.session.query(Blog).filter(Blog.id == id).first()
+        return render_template('blog_detail.html', blog=blog)
+    else:
+        return render_template('blog.html', blogs=get_blogs())
 
 @app.route("/newpost", methods=['POST', 'GET'])
 def newpost():
@@ -36,7 +41,7 @@ def newpost():
         db.session.add(newpost)
         db.session.commit()
 
-        return render_template('blog.html', blogs=get_blogs())
+        return render_template('blog_detail.html', blog=newpost)
     return render_template('newpost.html')
 
 def get_blogs():
