@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, request, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 
@@ -12,10 +13,14 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(240))
     body = db.Column(db.String(1000))
+    create_date = db.Column(db.DateTime)
 
-    def __init__(self, title, body):
+    def __init__(self, title, body, create_date):
         self.title = title
         self.body = body
+        if create_date is None:
+            create_date = datetime.datetime.utcnow()
+        self.create_date = create_date
 
 @app.route("/blog")
 def blog():
@@ -37,7 +42,7 @@ def newpost():
         if (not body) or (body.strip() == ""):
             return render_template('newpost.html', title=title, title_error='You must supply a body')
 
-        newpost = Blog(title, body)
+        newpost = Blog(title, body, None)
         db.session.add(newpost)
         db.session.commit()
 
@@ -45,7 +50,7 @@ def newpost():
     return render_template('newpost.html')
 
 def get_blogs():
-    return Blog.query.all()
+    return Blog.query.order_by(Blog.create_date.desc()).all()
 
 if __name__ == "__main__":
     app.run()
