@@ -8,11 +8,66 @@
       .center {
         text-align: center;
       }
+      nav ul {
+        display: inline-block;
+        padding: 0;
+      }
+      nav ul li {
+        display: inline-block;         
+        margin-right: 15px;
+      }
+      #user-account {
+        float: right;
+      }
+      .post-author {
+        font-size: 12px;
+        font-style: italic;
+      }
 	  </style>
 	</head>
 	<body>
-    <a href="/blog">Main Blog Page</a>
-    <a href="/newpost">Add a Blog Entry</a>
+    <nav>
+      <!--
+      <ul id="user-account">
+		  {% if 'username' in session %}
+        <li>
+            <form action="/logout" method="post">
+              <input type="submit" value="Log Out" />
+            </form>
+				</li>
+		  {% else %}
+        <li><a href="/login">login</a></li>
+		  {% endif %}
+      </ul>
+      -->
+      <ul id="user-account">
+		  {% if 'username' in session %}
+        <li><a href="/logout">logout '{{ session['username'] }}'</a></li>
+		  {% else %}
+        <li><a href="/login">login</a></li>
+		  {% endif %}
+      </ul>
+      <ul>
+        <li><a href="/">home</a></li>
+        <li><a href="/blog">all posts</a></li>
+        <li><a href="/newpost">new post</a></li>
+      </ul>
+    </nav>
+<!--    <a href="/">home</a>
+    <a href="/blog">all posts</a>
+    <a href="/newpost">new post</a>
+    <a href="/login">login</a>
+    <a href="/logout">logout</a> -->
+		{% with errors = get_flashed_messages(category_filter=["error"]) %}
+		  {% if errors %}
+      <ul class="error">
+		    {% for error in errors %}
+          <li>{{ error }}</li>
+		    {% endfor %}
+      </ul>
+		  {% endif %}
+		{% endwith %}
+
 		{% block content %}
 		{% endblock %}
 	</body>

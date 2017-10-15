@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1 class="center">SignUp</h1>
+
+	{% with usernames = get_flashed_messages(category_filter=["username"]) %}
+	<form action="/signup" method="post">
+		<label for="username">Username:</label>
+		{% if usernames %}
+		<input type="text" name="username" value="{{ usernames[0] }}" />
+		{% else %}
+		<input type="text" name="username" value="" />
+		{% endif %}
+		<br>
+		<br>
+		<label for="password">Password:</label>
+		<input type="password" name="password" />
+		<br>
+		<br>
+		<label for="verify-password">Verify-password</label>
+		<input name="verify-password" type="password"/>		
+		<br>
+		<br>
+		<input type="submit" value="Sign Up"/>
+	</form>
+	{% endwith %}
+
+{% endblock %}
