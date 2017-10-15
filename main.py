@@ -1,6 +1,7 @@
 from flask import request, redirect, render_template, session, flash
 from app import app, db
 from models import Blog, User
+from hashutils import password_matches_hash
 
 @app.route("/blog")
 def blog():
@@ -108,9 +109,7 @@ def login():
             flash('Username does not exist in database', 'error')
             return redirect('/login')
 
-        user = User.query.filter_by(username=username, password=password).first() 
-
-        if not user:
+        if not password_matches_hash(password, user.pw_hash):
             flash(username, 'username')
             flash('Password for user is incorrect', 'error')
             return redirect('/login')
