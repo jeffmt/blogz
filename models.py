@@ -11,7 +11,6 @@ class Blog(db.Model):
     def __init__(self, title, body, owner_id, create_date):
         self.title = title
         self.body = body
-#        self.owner = owner 
         self.owner_id = owner_id
         if create_date is None:
             create_date = datetime.datetime.utcnow()

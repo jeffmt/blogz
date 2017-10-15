@@ -2,38 +2,6 @@ from flask import request, redirect, render_template, session, flash
 from app import app, db
 from models import Blog, User
 
-#app = Flask(__name__)
-#app.config['DEBUG'] = True
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:doit@localhost:3306/blogz'
-#app.config['SQLALCHEMY_ECHO'] = True
-
-#db = SQLAlchemy(app)
-
-#class Blog(db.Model):
-#    id = db.Column(db.Integer, primary_key=True)
-#    title = db.Column(db.String(240))
-#    body = db.Column(db.String(1000))
-#    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-#    create_date = db.Column(db.DateTime)
-#
-#    def __init__(self, title, body, owner, create_date):
-#        self.title = title
-#        self.body = body
-#        self.owner = owner 
-#        if create_date is None:
-#            create_date = datetime.datetime.utcnow()
-#        self.create_date = create_date
-#
-#class User(db.Model):
-#    id = db.Column(db.Integer, primary_key=True)
-#    username = db.Column(db.String(240), unique=True)
-#    password = db.Column(db.String(240))
-#    blogs = db.relationship('Blog', backref='owner') 
-#
-#    def __init__(self, username, password):
-#        self.username = username 
-#        self.password = password 
-
 @app.route("/blog")
 def blog():
     id = request.args.get('id')
@@ -105,22 +73,14 @@ def signup():
         db.session.commit()
 
         session['username'] = user.username
-#        session['user'] = user
         return redirect('/newpost')
 
     return render_template('signup.html')
-
-#@app.route("/logout", methods=['POST'])
-#def logout():
-#	del session['username']
-#	return redirect('/blog')
 
 @app.route("/logout")
 def logout():
     if 'username' in session:
         del session['username']
-#    if 'user' in session:
-#        del session['user']
     return redirect('/blog')
 
 @app.route("/")
@@ -141,29 +101,6 @@ def login():
             flash(username, 'username')
             flash('invalid password', 'error')
             return redirect('/login')
-#		if username.count(' ') > 0:
-#			flash('Username cannot contain a space')
-#			return redirect('/login')
-#
-#		if not username:
-#			flash('Username cannot be left blank')
-#			return redirect('/login')
-#
-#		if len(username) < 3 or len(username) > 20: 
-#			flash('Username should be between 3 and 20 characters')
-#			return redirect('/login')
-#
-#		if password.count(' ') > 0:
-#			flash('Password cannot contain a space')
-#			return redirect('/login')
-#
-#		if not password:
-#			flash('Password cannot be left blank')
-#			return redirect('/login')
-#
-#		if len(password) < 3 or len(password) > 20: 
-#			flash('Password should be between 3 and 20 characters')
-#			return redirect('/login')
 
         user = User.query.filter_by(username=username).first() 
 
@@ -179,7 +116,6 @@ def login():
             return redirect('/login')
 
         session['username'] = username
-#        session['user'] = user
         return redirect('/newpost')
     return render_template('login.html')
 
@@ -188,7 +124,6 @@ def require_login():
     public_paths = ['/login', '/',  '/signup', '/blog',]
     private = request.path not in public_paths
     logged_out = 'username' not in session
-#    logged_out = 'user' not in session
     if logged_out and private:
         return redirect('/login')
 

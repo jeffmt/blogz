@@ -27,19 +27,6 @@
 	</head>
 	<body>
     <nav>
-      <!--
-      <ul id="user-account">
-		  {% if 'username' in session %}
-        <li>
-            <form action="/logout" method="post">
-              <input type="submit" value="Log Out" />
-            </form>
-				</li>
-		  {% else %}
-        <li><a href="/login">login</a></li>
-		  {% endif %}
-      </ul>
-      -->
       <ul id="user-account">
 		  {% if 'username' in session %}
         <li><a href="/logout">logout '{{ session['username'] }}'</a></li>
@@ -53,11 +40,6 @@
         <li><a href="/newpost">new post</a></li>
       </ul>
     </nav>
-<!--    <a href="/">home</a>
-    <a href="/blog">all posts</a>
-    <a href="/newpost">new post</a>
-    <a href="/login">login</a>
-    <a href="/logout">logout</a> -->
 		{% with errors = get_flashed_messages(category_filter=["error"]) %}
 		  {% if errors %}
       <ul class="error">
