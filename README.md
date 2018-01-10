@@ -13,3 +13,14 @@ Add functionality to delete users and blog posts.
 
 # Author
 Jeff T
+
+![Users](Users.png "Users")
+
+
+![Posts](Posts.png "Posts")
+
+
+![Post](Post.png "Post")
+
+
+![AddNewPost](AddNewPost.png "AddNewPost")
