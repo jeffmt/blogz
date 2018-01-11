@@ -7,19 +7,23 @@ This application builds upon build-a-blog to make the application a multi-user s
 and be logged in before creating blog posts.  Users can view blog posts by an individual 
 user as well as by all users.  User passwords are hashed and salted before being stored in the database.
 
-### Users Page
+## Users Page
 
 ![Users](Users.png "Users")
 
-### Blog Posts Page
+
+## Blog Posts Page
 
 ![Posts](Posts.png "Posts")
 
-### Blog Post Detail Page
+
+
+## Blog Post Detail Page
 
 ![Post](Post.png "Post")
 
-### Form to create a new blog post
+
+## Form to create a new blog post
 
 ![AddNewPost](AddNewPost.png "AddNewPost")
 
